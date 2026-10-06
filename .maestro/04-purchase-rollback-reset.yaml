@@ -1,0 +1,113 @@
+appId: ${APP_ID}
+name: COL-E05 E08 E14 - rollback retry and reset
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: e2e.toggle
+- tapOn:
+    id: e2e.fault.purchase
+- scrollUntilVisible:
+    element:
+      id: artwork.art-lumen
+    direction: DOWN
+- tapOn:
+    id: artwork.art-lumen
+- scrollUntilVisible:
+    element:
+      id: purchase.open
+    direction: DOWN
+- tapOn:
+    id: purchase.open
+- scrollUntilVisible:
+    element:
+      id: purchase.confirm
+    direction: DOWN
+- tapOn:
+    id: purchase.confirm
+- assertVisible: 'Perubahan gagal disimpan. Coba lagi.'
+- assertNotVisible:
+    id: purchase.success.balance
+- assertVisible: '1.000 kredit'
+- takeScreenshot: purchase-rollback
+- tapOn:
+    id: e2e.toggle
+- tapOn:
+    id: e2e.fault.off
+- tapOn:
+    id: purchase.confirm
+- assertVisible:
+    id: purchase.success.balance
+    text: '750 kredit'
+- stopApp
+- launchApp
+- tapOn:
+    id: tab.collection
+- tapOn:
+    id: collection.item.art-lumen
+- scrollUntilVisible:
+    element:
+      id: listing.open
+    direction: DOWN
+- assertNotVisible:
+    id: purchase.open
+- tapOn:
+    id: listing.open
+- tapOn:
+    id: listing.price
+- inputText: '300'
+- hideKeyboard
+- tapOn:
+    id: listing.publish
+- assertVisible: 'Listing published secara lokal.*'
+- stopApp
+- launchApp
+- tapOn:
+    id: settings.open
+- tapOn:
+    id: settings.reset
+- tapOn:
+    id: settings.reset.cancel
+- back
+- assertVisible:
+    id: credits.balance
+    text: '750 kredit.*'
+- tapOn:
+    id: tab.collection
+- tapOn:
+    id: collection.listings
+- assertVisible: 'Published.*'
+- takeScreenshot: reset-cancel-retains-listing
+- tapOn:
+    id: settings.open
+- tapOn:
+    id: settings.reset
+- tapOn:
+    id: settings.reset.confirm
+- assertVisible: 'Demo direset. Kamu siap mulai lagi.'
+- stopApp
+- launchApp
+- assertVisible:
+    id: credits.balance
+    text: '1.000 kredit.*'
+- tapOn:
+    id: credits.open
+- assertVisible: 'Kredit awal demo'
+- assertNotVisible: 'Pembelian koleksi'
+- back
+- tapOn:
+    id: tab.collection
+- assertVisible:
+    id: collection.item.owned-orbit
+- assertNotVisible:
+    id: collection.item.art-lumen
+- tapOn:
+    id: collection.listings
+- assertVisible: 'Belum ada listing'
+- tapOn:
+    id: tab.heart
+- assertVisible: 'Belum ada favorit'
+- tapOn:
+    id: tab.activity
+- assertVisible: 'Cerita dimulai di sini'
+- takeScreenshot: reset-restores-fixture

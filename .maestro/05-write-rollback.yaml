@@ -1,0 +1,65 @@
+appId: ${APP_ID}
+name: COL-E15 - favorite and listing SQL rollback
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: e2e.toggle
+- tapOn:
+    id: e2e.fault.watchlist
+- scrollUntilVisible:
+    element:
+      id: artwork.art-lumen
+    direction: DOWN
+- tapOn:
+    id: artwork.art-lumen
+- scrollUntilVisible:
+    element:
+      id: watchlist.toggle
+    direction: DOWN
+- tapOn:
+    id: watchlist.toggle
+- assertVisible: 'Perubahan gagal disimpan. Coba lagi.'
+- assertVisible: 'Simpan favorit'
+- stopApp
+- launchApp
+- tapOn:
+    id: tab.heart
+- assertVisible: 'Belum ada favorit'
+- tapOn:
+    id: e2e.toggle
+- tapOn:
+    id: e2e.fault.listing
+- tapOn:
+    id: tab.collection
+- tapOn:
+    id: collection.item.owned-orbit
+- scrollUntilVisible:
+    element:
+      id: listing.open
+    direction: DOWN
+- tapOn:
+    id: listing.open
+- tapOn:
+    id: listing.price
+- inputText: '300'
+- hideKeyboard
+- tapOn:
+    id: listing.publish
+- assertVisible: 'Perubahan gagal disimpan. Coba lagi.'
+- takeScreenshot: listing-rollback
+- stopApp
+- launchApp
+- assertVisible:
+    id: credits.balance
+    text: '1.000 kredit.*'
+- tapOn:
+    id: tab.collection
+- assertVisible:
+    id: collection.item.owned-orbit
+- tapOn:
+    id: collection.listings
+- assertVisible: 'Belum ada listing'
+- tapOn:
+    id: tab.activity
+- assertVisible: 'Cerita dimulai di sini'

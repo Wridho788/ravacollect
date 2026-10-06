@@ -1,0 +1,127 @@
+appId: ${APP_ID}
+name: COL-E01 E02 E03 E06 - discovery favorites insufficient credit
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: discovery.search
+- inputText: 'Nara'
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: artwork.art-lumen
+    direction: DOWN
+- assertNotVisible:
+    id: artwork.owned-orbit
+- scrollUntilVisible:
+    element:
+      id: discovery.clear
+    direction: UP
+- tapOn:
+    id: discovery.clear
+- tapOn:
+    id: discovery.search
+- inputText: 'zzznomatch'
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      text: 'Karya belum ditemukan'
+    direction: DOWN
+- scrollUntilVisible:
+    element:
+      id: discovery.clear
+    direction: UP
+- tapOn:
+    id: discovery.clear
+- tapOn:
+    id: category.Alam
+- scrollUntilVisible:
+    element:
+      id: artwork.art-tide
+    direction: DOWN
+- assertNotVisible:
+    id: artwork.art-lumen
+- scrollUntilVisible:
+    element:
+      id: category.Semua
+    direction: UP
+- tapOn:
+    id: category.Semua
+- tapOn:
+    id: discovery.sort
+- assertVisible: 'Harga ↑'
+- scrollUntilVisible:
+    element:
+      id: artwork.owned-orbit
+    direction: DOWN
+- takeScreenshot: sort-ascending
+- scrollUntilVisible:
+    element:
+      id: discovery.sort
+    direction: UP
+- tapOn:
+    id: discovery.sort
+- assertVisible: 'Harga ↓'
+- scrollUntilVisible:
+    element:
+      id: artwork.art-premium
+    direction: DOWN
+- takeScreenshot: sort-descending
+- tapOn:
+    id: artwork.art-premium
+- scrollUntilVisible:
+    element:
+      id: purchase.open
+    direction: DOWN
+- assertNotVisible:
+    id: listing.open
+- tapOn:
+    id: purchase.open
+- scrollUntilVisible:
+    element:
+      id: purchase.confirm
+    direction: DOWN
+- assertVisible: 'Kredit kurang'
+- tapOn:
+    id: purchase.confirm
+- assertVisible: 'Kredit demo tidak cukup untuk karya ini.'
+- assertNotVisible:
+    id: purchase.success.balance
+- takeScreenshot: credit-insufficient
+- stopApp
+- launchApp
+- assertVisible:
+    id: credits.balance
+    text: '1.000 kredit.*'
+- scrollUntilVisible:
+    element:
+      id: artwork.art-lumen
+    direction: DOWN
+- tapOn:
+    id: artwork.art-lumen
+- scrollUntilVisible:
+    element:
+      id: watchlist.toggle
+    direction: DOWN
+- tapOn:
+    id: watchlist.toggle
+- assertVisible: 'Hapus dari favorit'
+- stopApp
+- launchApp
+- tapOn:
+    id: tab.heart
+- tapOn:
+    id: artwork.art-lumen
+- scrollUntilVisible:
+    element:
+      id: watchlist.toggle
+    direction: DOWN
+- tapOn:
+    id: watchlist.toggle
+- assertVisible: 'Simpan favorit'
+- stopApp
+- launchApp
+- tapOn:
+    id: tab.heart
+- assertVisible: 'Belum ada favorit'
+- takeScreenshot: favorite-removed

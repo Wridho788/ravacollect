@@ -1,0 +1,128 @@
+appId: ${APP_ID}
+name: COL-E05 E10 E11 E12 - listing lifecycle
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: tab.collection
+- tapOn:
+    id: collection.item.owned-orbit
+- scrollUntilVisible:
+    element:
+      id: listing.open
+    direction: DOWN
+- assertNotVisible:
+    id: purchase.open
+- tapOn:
+    id: listing.open
+- tapOn:
+    id: listing.price
+- inputText: '0'
+- hideKeyboard
+- tapOn:
+    id: listing.save
+- assertVisible: 'Harga harus bilangan bulat positif.*'
+- tapOn:
+    id: listing.price
+- eraseText
+- inputText: '300'
+- hideKeyboard
+- tapOn:
+    id: listing.description
+- inputText: 'Orbit draft pada perangkat'
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: listing.save
+    direction: DOWN
+- tapOn:
+    id: listing.save
+- assertVisible: 'Draft berhasil disimpan.'
+- scrollUntilVisible:
+    element:
+      id: listing.price
+    direction: UP
+- tapOn:
+    id: listing.price
+- eraseText
+- inputText: '350'
+- hideKeyboard
+- tapOn:
+    id: listing.description
+    point: '95%,90%'
+- eraseText
+- assertVisible:
+    id: listing.description
+    text: 'Ceritakan karyamu.*'
+- inputText: 'Orbit edited pada perangkat'
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: listing.publish
+    direction: DOWN
+- tapOn:
+    id: listing.publish
+- assertVisible: 'Listing published secara lokal.*'
+- tapOn:
+    id: listing.publish
+- assertVisible: 'Draft berhasil disimpan.'
+- tapOn:
+    id: listing.publish
+- assertVisible: 'Listing published secara lokal.*'
+- takeScreenshot: listing-published
+- stopApp
+- launchApp
+- assertVisible:
+    id: credits.balance
+    text: '1.000 kredit.*'
+- tapOn:
+    id: tab.collection
+- tapOn:
+    id: collection.item.owned-orbit
+- scrollUntilVisible:
+    element:
+      id: listing.open
+    direction: DOWN
+- tapOn:
+    id: listing.open
+- assertVisible:
+    id: listing.status
+    text: 'Published.*'
+- assertVisible:
+    id: listing.price
+    text: '350'
+- assertVisible: 'Orbit edited pada perangkat'
+- scrollUntilVisible:
+    element:
+      id: listing.delete
+    direction: DOWN
+- tapOn:
+    id: listing.delete
+- scrollUntilVisible:
+    element:
+      id: listing.delete.cancel
+    direction: DOWN
+- tapOn:
+    id: listing.delete.cancel
+- tapOn:
+    id: listing.delete
+- scrollUntilVisible:
+    element:
+      id: listing.delete.confirm
+    direction: DOWN
+- tapOn:
+    id: listing.delete.confirm
+- assertVisible: 'Listing dihapus.*'
+- takeScreenshot: listing-deleted
+- stopApp
+- launchApp
+- assertVisible:
+    id: credits.balance
+    text: '1.000 kredit.*'
+- tapOn:
+    id: tab.collection
+- assertVisible:
+    id: collection.item.owned-orbit
+- tapOn:
+    id: collection.listings
+- assertVisible: 'Belum ada listing'
